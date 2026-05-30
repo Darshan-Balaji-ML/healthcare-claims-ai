@@ -1,0 +1,27 @@
+# Core data + ML 
+pandas
+numpy
+scikit-learn
+
+# Visualization 
+matplotlib
+seaborn
+plotly
+
+# Synthetic data generation 
+faker
+
+# Class imbalance handling 
+imbalanced-learn
+
+# NLP text preprocessing 
+nltk
+
+# Model persistence 
+joblib
+
+# Notebooks 
+jupyter
+
+# Web app + deployment 
+streamlit

@@ -1,0 +1,4 @@
+data/raw/
+*.pkl
+__pycache__/
+.DS_Store
