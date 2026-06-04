@@ -9,23 +9,18 @@ st.set_page_config(page_title="Data Insights", page_icon="📈", layout="wide")
 st.title("📈 Data Insights")
 st.markdown("Exploratory analysis of the CMS Medicare dataset and synthetic claims data.")
 
-# Load synthetic data
 @st.cache_data
 def load_synthetic():
     base = os.path.dirname(os.path.dirname(__file__))
     return pd.read_csv(os.path.join(base, 'data/synthetic/synthetic_claims.csv'))
 
 @st.cache_data
-def load_cms():
+def load_top20_cpt():
     base = os.path.dirname(os.path.dirname(__file__))
-    return pd.read_csv(
-        os.path.join(base, 'data/raw/PHY_R26_P05_V10_D24_Prov_Svc.csv'),
-        nrows=500000,
-        low_memory=False
-    )
+    return pd.read_csv(os.path.join(base, 'data/processed/top20_cpt.csv'))
 
 df_synthetic = load_synthetic()
-df_cms = load_cms()
+df_top20 = load_top20_cpt()
 
 st.markdown("---")
 
@@ -77,15 +72,10 @@ st.markdown("---")
 st.markdown("### Chart 3 — Top 20 HCPCS Codes by Total Services")
 st.caption("What procedures are most common in Medicare billing?")
 
-top20_cpt = (df_cms.groupby(['HCPCS_Cd', 'HCPCS_Desc'])['Tot_Srvcs']
-               .sum()
-               .sort_values(ascending=False)
-               .head(20)
-               .reset_index())
-top20_cpt['HCPCS_Short'] = (top20_cpt['HCPCS_Cd'] + ' - ' +
-                              top20_cpt['HCPCS_Desc'].str[:40])
+df_top20['HCPCS_Short'] = (df_top20['HCPCS_Cd'] + ' - ' +
+                            df_top20['HCPCS_Desc'].str[:40])
 
-fig3 = px.bar(top20_cpt, x='Tot_Srvcs', y='HCPCS_Short',
+fig3 = px.bar(df_top20, x='Tot_Srvcs', y='HCPCS_Short',
               orientation='h',
               title='Top 20 HCPCS Codes by Total Services (millions)')
 fig3.update_layout(yaxis={'categoryorder': 'total ascending'})
