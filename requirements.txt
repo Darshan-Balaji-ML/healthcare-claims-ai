@@ -25,3 +25,6 @@ jupyter
 
 # Web app + deployment 
 streamlit
+
+# AI explanations
+anthropic
