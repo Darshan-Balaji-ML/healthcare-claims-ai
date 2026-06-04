@@ -158,7 +158,7 @@ if st.button("Predict Denial Risk"):
     with st.spinner("Generating AI explanation..."):
         message = client.messages.create(
             model="claude-sonnet-4-6",
-            max_tokens=300,
+            max_tokens=500,
             messages=[{
                 "role": "user",
                 "content": f"""You are a healthcare billing expert. A claim has been 
