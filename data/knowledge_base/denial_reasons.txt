@@ -1,0 +1,14 @@
+CARC Code 4: The service/equipment/drug is not covered by the plan.
+CARC Code 16: Claim/service lacks information or has submission/billing error.
+CARC Code 29: The time limit for filing has expired.
+CARC Code 50: These are non-covered services because this is not deemed a medical necessity.
+CARC Code 97: The benefit for this service is included in the payment/allowance for another service.
+CARC Code 151: Payment adjusted because the payer deems the information submitted does not support this many/frequency of services.
+CARC Code 167: This (these) diagnosis(es) is (are) not covered.
+CARC Code 197: Precertification/authorization/notification/pre-treatment absent.
+
+Common denial patterns:
+Medical necessity denial: ICD and CPT codes are clinically inconsistent.
+Duplicate claim denial: same patient, provider, CPT, and date submitted more than once.
+Timely filing denial: claim submitted after the payer deadlines (typically 90-365 days).
+Prior authorization denial: procedure required advance approval that was not obtained.

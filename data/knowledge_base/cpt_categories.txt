@@ -1,0 +1,34 @@
+CPT Code Range 99202-99215: Office or other outpatient visits (Evaluation and Management)
+  99202-99205: New patient office visits
+  99211-99215: Established patient office visits
+  99213: Most common office visit code - established patient, moderate complexity
+  99214: Established patient, moderate-high complexity
+
+CPT Code Range 93000-93799: Cardiology procedures
+  93000: Electrocardiogram (ECG/EKG)
+  93306: Echocardiography
+  93454: Cardiac catheterization
+
+CPT Code Range 80000-89999: Laboratory and pathology
+  80053: Comprehensive metabolic panel
+  85025: Complete blood count (CBC)
+  83036: Hemoglobin A1c (diabetes monitoring)
+
+CPT Code Range 70000-79999: Radiology
+  71046: Chest X-ray, 2 views
+  72148: MRI lumbar spine
+  70553: MRI brain with contrast
+
+CPT Code Range 27000-29999: Orthopedic surgery (Musculoskeletal)
+  27447: Total knee replacement
+  27130: Total hip replacement
+  29881: Knee arthroscopy
+
+CPT Code Range 90000-90899: Psychiatry and behavioral health
+  90834: Psychotherapy, 45 minutes
+  90837: Psychotherapy, 60 minutes
+  90847: Family psychotherapy
+
+CPT Code Range 94000-94799: Pulmonary procedures
+  94010: Spirometry (breathing test)
+  94640: Nebulizer treatment
