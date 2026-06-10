@@ -5,46 +5,49 @@ import streamlit as st
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 st.title('Claims Intelligence Copilot')
-st.caption('RAG-powered Q&A grounded in ICD codes, CPT codes, and claims policy')
+st.caption('Agentic AI with ICD lookup, CPT validation, and denial prediction')
 
-# Initialize the copilot (cached so it only loads once per session)
-if 'copilot' not in st.session_state:
-    with st.spinner('Loading knowledge base...'):
-        from copilot.rag_engine import ClaimsCopilot
-        st.session_state.copilot = ClaimsCopilot()
-        st.session_state.chat_history = []
+# Initialize the agent
+if 'agent' not in st.session_state:
+    with st.spinner('Loading claims agent...'):
+        from copilot.agent import ClaimsAgent
+        st.session_state.agent = ClaimsAgent()
+        st.session_state.agent_history = []
+
+# Sidebar: reasoning trace
+st.sidebar.header('Agent Reasoning Trace')
+st.sidebar.caption('Every tool the agent called and why')
 
 # Display chat history
-for msg in st.session_state.chat_history:
+for msg in st.session_state.agent_history:
     with st.chat_message(msg['role']):
         st.write(msg['content'])
-        if msg['role'] == 'assistant' and 'sources' in msg:
-            with st.expander('Sources used', expanded=False):
-                for i, src in enumerate(msg['sources']):
-                    st.caption(f'Source {i+1} (relevance: {src["score"]})')
-                    st.text(src['text'])
 
 # Chat input
-if prompt := st.chat_input('Ask about ICD codes, CPT codes, or claim denials...'):
+if prompt := st.chat_input('Describe a claim or ask a question...'):
     with st.chat_message('user'):
         st.write(prompt)
-    st.session_state.chat_history.append({'role': 'user', 'content': prompt})
+    st.session_state.agent_history.append({'role': 'user', 'content': prompt})
 
     with st.chat_message('assistant'):
-        with st.spinner('Searching knowledge base...'):
-            answer, sources = st.session_state.copilot.chat(prompt)
+        with st.spinner('Agent is thinking...'):
+            answer, trace = st.session_state.agent.run(prompt)
         st.write(answer)
-        with st.expander('Sources used', expanded=False):
-            for i, src in enumerate(sources):
-                st.caption(f'Source {i+1} (relevance: {src["score"]})')
-                st.text(src['text'])
+    st.session_state.agent_history.append({'role': 'assistant', 'content': answer})
 
-    st.session_state.chat_history.append({
-        'role': 'assistant', 'content': answer, 'sources': sources
-    })
+    # Show trace in sidebar
+    if trace:
+        st.sidebar.success(f'{len(trace)} tool(s) called')
+        for i, entry in enumerate(trace):
+            with st.sidebar.expander(f'Tool {i+1}: {entry["tool"]}'):
+                st.json(entry['input'])
+                st.caption('Result:')
+                st.json(entry['output'])
+    else:
+        st.sidebar.info('No tools called — answered from knowledge')
 
-# Reset button in sidebar
+# Reset button
 if st.sidebar.button('Clear conversation'):
-    st.session_state.copilot.reset()
-    st.session_state.chat_history = []
+    st.session_state.agent.reset()
+    st.session_state.agent_history = []
     st.rerun()
